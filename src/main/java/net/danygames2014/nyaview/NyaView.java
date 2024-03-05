@@ -27,7 +27,6 @@ public class NyaView {
         loader.addMappings(new Mappings("nya", "NYA", MappingType.BABRIC, Util.getMappingPath("nya"), MappingFormat.ENIGMA_DIR));
 
         MappingGui mappingGui = new MappingGui(loader);
-        mappingGui.refreshTable();
 
 //        TestGui testGui = new TestGui();
 

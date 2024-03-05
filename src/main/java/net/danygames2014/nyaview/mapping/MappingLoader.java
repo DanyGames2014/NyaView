@@ -2,8 +2,10 @@ package net.danygames2014.nyaview.mapping;
 
 import net.danygames2014.nyaview.NyaView;
 import net.danygames2014.nyaview.mapping.entry.ClassMappingEntry;
+import net.danygames2014.nyaview.mapping.entry.MethodMappingEntry;
 import net.danygames2014.nyaview.util.Environment;
 import net.fabricmc.mappingio.MappingReader;
+import net.fabricmc.mappingio.tree.MappingTree;
 import net.fabricmc.mappingio.tree.MemoryMappingTree;
 import net.fabricmc.mappingio.tree.VisitableMappingTree;
 
@@ -97,6 +99,20 @@ public class MappingLoader {
                     classEntry.obfuscatedServer = "";
                 }
 
+                // Methods
+                for (MappingTree.MethodMapping method : item.getMethods()){
+                    MethodMappingEntry methodEntry = new MethodMappingEntry();
+
+                    methodEntry.intermediary = method.getSrcName();
+
+                    methodEntry.obfuscatedClient = method.getName("client");
+                    methodEntry.obfuscatedServer = method.getName("server");
+
+                    classEntry.methods.add(methodEntry);
+                }
+
+                // Fields
+
                 classes.put(classEntry.intermediary, classEntry);
 
             }
@@ -164,10 +180,14 @@ public class MappingLoader {
                 String[] srcname = item.getSrcName().split("/");
                 String className = srcname[srcname.length-1];
 
-
                 if(classes.containsKey(className)){
                     classes.get(className).babric.put(mappingSet, item.getName("target"));
                 }
+
+                // Methods
+//                for (MappingTree.MethodMapping method : item.getMethods()){
+//                    System.out.println("Class : " + item.getName("target") + "." + method.getName("target"));
+//                }
             }
 
         } catch (IOException e) {

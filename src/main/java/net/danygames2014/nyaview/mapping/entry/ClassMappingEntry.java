@@ -3,6 +3,7 @@ package net.danygames2014.nyaview.mapping.entry;
 import net.danygames2014.nyaview.mapping.Mappings;
 import net.danygames2014.nyaview.util.Environment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @SuppressWarnings("unused")
@@ -23,8 +24,12 @@ public class ClassMappingEntry implements MappingEntry {
     // Babric
     public HashMap<Mappings, String> babric;
 
+    // Methods
+    public ArrayList<MethodMappingEntry> methods;
+
     public ClassMappingEntry() {
         babric = new HashMap<>();
+        methods = new ArrayList<>();
     }
 
     public Environment getEnvironment() {
