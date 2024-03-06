@@ -1,6 +1,7 @@
 package net.danygames2014.nyaview.mapping;
 
 import net.danygames2014.nyaview.mapping.entry.ClassMappingEntry;
+import net.danygames2014.nyaview.mapping.entry.FieldMappingEntry;
 import net.danygames2014.nyaview.mapping.entry.MethodMappingEntry;
 import net.danygames2014.nyaview.util.Environment;
 import net.fabricmc.mappingio.MappingReader;
@@ -104,13 +105,43 @@ public class MappingLoader {
 
                     methodEntry.intermediary = method.getSrcName();
 
-                    methodEntry.obfuscatedClient = method.getName("client");
-                    methodEntry.obfuscatedServer = method.getName("server");
+                    // If the client and intermediary names are the same, it doesnt exist on client
+                    if (method.getName("client").equals(methodEntry.intermediary)) {
+                        methodEntry.obfuscatedClient = "";
+                    } else {
+                        methodEntry.obfuscatedClient = method.getName("client");
+                        System.out.println(method.getDesc("client"));
+                    }
+
+                    // If the server and intermnediary names are the same, it doesnt exist on the server
+                    if (method.getName("server").equals(methodEntry.intermediary)) {
+                        methodEntry.obfuscatedServer = "";
+                    } else {
+                        methodEntry.obfuscatedServer = method.getName("server");
+                    }
 
                     classEntry.methods.put(methodEntry.intermediary, methodEntry);
                 }
 
                 // Fields
+                for (MappingTree.FieldMapping field : item.getFields()) {
+                    var fieldEntry = new FieldMappingEntry();
+
+                    fieldEntry.intermediary = field.getSrcName();
+
+                    if (field.getName("client").equals(fieldEntry.intermediary)) {
+                        fieldEntry.obfuscatedClient = "";
+                    } else {
+                        fieldEntry.obfuscatedClient = field.getName("client");
+                    }
+
+                    if (field.getName("server").equals(fieldEntry.intermediary)) {
+                        fieldEntry.obfuscatedServer = "";
+                    } else {
+                        fieldEntry.obfuscatedServer = field.getName("server");
+                    }
+                    classEntry.fields.put(fieldEntry.intermediary, fieldEntry);
+                }
 
                 classes.put(classEntry.intermediary, classEntry);
 
@@ -145,12 +176,17 @@ public class MappingLoader {
                             classEntry.mcp = mcpName[mcpName.length - 1];
 
                             System.out.println("CLASS " + classEntry.mcp);
-                            for (var method : item.getMethods()){
-                                System.out.println(method);
-                                for (var class_method : classEntry.methods.values()){
-                                    System.out.println();
+                            for (var method : item.getMethods()) {
+//                                System.out.println(method);
+                                for (var class_method : classEntry.methods.values()) {
+//                                    System.out.println("?" + class_method.obfuscatedClient + " -> " + method.getSrcName());
+                                    if(class_method.obfuscatedClient.equals(method.getSrcName())){
+                                        System.out.println(class_method.obfuscatedClient + " -> " + method.getName(0));
+                                        System.out.println(method.getSrcDesc());
+                                    }
                                 }
                             }
+                            System.out.println();
                         }
 
                     } else if (environment == Environment.SERVER) {
