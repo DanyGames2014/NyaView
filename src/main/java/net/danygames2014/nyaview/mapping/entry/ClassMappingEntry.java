@@ -25,11 +25,15 @@ public class ClassMappingEntry implements MappingEntry {
     public HashMap<Mappings, String> babric;
 
     // Methods
-    public ArrayList<MethodMappingEntry> methods;
+    public HashMap<String, MethodMappingEntry> methods;
+
+    // Fields
+    public HashMap<String, FieldMappingEntry> fields;
 
     public ClassMappingEntry() {
         babric = new HashMap<>();
-        methods = new ArrayList<>();
+        methods = new HashMap<>();
+        fields = new HashMap<>();
     }
 
     public Environment getEnvironment() {

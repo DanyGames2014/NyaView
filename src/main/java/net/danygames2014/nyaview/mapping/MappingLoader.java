@@ -1,6 +1,5 @@
 package net.danygames2014.nyaview.mapping;
 
-import net.danygames2014.nyaview.NyaView;
 import net.danygames2014.nyaview.mapping.entry.ClassMappingEntry;
 import net.danygames2014.nyaview.mapping.entry.MethodMappingEntry;
 import net.danygames2014.nyaview.util.Environment;
@@ -91,16 +90,16 @@ public class MappingLoader {
                 classEntry.obfuscatedClient = item.getName("client");
                 classEntry.obfuscatedServer = item.getName("server");
 
-                if(classEntry.environment == Environment.SERVER){
+                if (classEntry.environment == Environment.SERVER) {
                     classEntry.obfuscatedClient = "";
                 }
 
-                if(classEntry.environment == Environment.CLIENT){
+                if (classEntry.environment == Environment.CLIENT) {
                     classEntry.obfuscatedServer = "";
                 }
 
                 // Methods
-                for (MappingTree.MethodMapping method : item.getMethods()){
+                for (MappingTree.MethodMapping method : item.getMethods()) {
                     MethodMappingEntry methodEntry = new MethodMappingEntry();
 
                     methodEntry.intermediary = method.getSrcName();
@@ -108,7 +107,7 @@ public class MappingLoader {
                     methodEntry.obfuscatedClient = method.getName("client");
                     methodEntry.obfuscatedServer = method.getName("server");
 
-                    classEntry.methods.add(methodEntry);
+                    classEntry.methods.put(methodEntry.intermediary, methodEntry);
                 }
 
                 // Fields
@@ -136,24 +135,30 @@ public class MappingLoader {
 
                 String obfuscatedName = item.getSrcName();
 
-                if(environment == Environment.CLIENT){
-                    for (var classEntry : classes.values()){
-                        if(classEntry.obfuscatedClient.equals(obfuscatedName)){
-                            if(classEntry.environment == Environment.SERVER){
+                for (var classEntry : classes.values()) {
+                    if (environment == Environment.CLIENT) {
+                        if (classEntry.obfuscatedClient.equals(obfuscatedName)) {
+                            if (classEntry.environment == Environment.SERVER) {
                                 throw new IllegalStateException("Found a matching obfuscated name for client but the environment is server");
                             }
                             String[] mcpName = item.getName(0).split("/");
-                            classEntry.mcp = mcpName[mcpName.length-1];
-                        }
-                    }
+                            classEntry.mcp = mcpName[mcpName.length - 1];
 
-                } else if (environment == Environment.SERVER) {
-                    for (var classEntry : classes.values()){
-                        if(classEntry.obfuscatedServer.equals(obfuscatedName)){
+                            System.out.println("CLASS " + classEntry.mcp);
+                            for (var method : item.getMethods()){
+                                System.out.println(method);
+                                for (var class_method : classEntry.methods.values()){
+                                    System.out.println();
+                                }
+                            }
+                        }
+
+                    } else if (environment == Environment.SERVER) {
+                        if (classEntry.obfuscatedServer.equals(obfuscatedName)) {
                             String[] mcpName = item.getName(0).split("/");
                             // Use Server mapping only if client one isn't present
-                            if(classEntry.mcp == null && classEntry.environment == Environment.SERVER){
-                                classEntry.mcp = mcpName[mcpName.length-1];
+                            if (classEntry.mcp == null && classEntry.environment == Environment.SERVER) {
+                                classEntry.mcp = mcpName[mcpName.length - 1];
                             }
                         }
                     }
@@ -161,7 +166,7 @@ public class MappingLoader {
             }
 
         } catch (IOException e) {
-            System.out.println("Failed to load intermediary, file not found");
+            System.out.println("Failed to load MCP " + environment);
             e.printStackTrace();
         }
 
@@ -178,9 +183,9 @@ public class MappingLoader {
                 String obfuscatedName = item.getSrcName();
 
                 String[] srcname = item.getSrcName().split("/");
-                String className = srcname[srcname.length-1];
+                String className = srcname[srcname.length - 1];
 
-                if(classes.containsKey(className)){
+                if (classes.containsKey(className)) {
                     classes.get(className).babric.put(mappingSet, item.getName("target"));
                 }
 
@@ -195,6 +200,6 @@ public class MappingLoader {
             e.printStackTrace();
         }
 
-        System.out.println(mappingSet.visibleName +" loaded");
+        System.out.println(mappingSet.visibleName + " loaded");
     }
 }

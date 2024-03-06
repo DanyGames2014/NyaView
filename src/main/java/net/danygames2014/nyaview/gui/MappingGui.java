@@ -163,7 +163,7 @@ public class MappingGui extends JFrame {
             }
 
             classTableModel.addRow(row.toArray());
-            methodTableModel.addRow(row.toArray());
+//            methodTableModel.addRow(row.toArray());
         }
 
         classTable.setModel(classTableModel);
@@ -209,7 +209,7 @@ public class MappingGui extends JFrame {
 
                     ClassMappingEntry c = loader.classes.get(intermediary);
 
-                    for (MethodMappingEntry method : c.methods) {
+                    for (MethodMappingEntry method : c.methods.values()) {
                         System.out.println(method.intermediary);
                     }
 //                    tblMethods.setModel(currentLoader.getMethodModel(pkg + "/" + name));
