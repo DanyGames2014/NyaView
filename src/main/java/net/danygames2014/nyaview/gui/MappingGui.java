@@ -14,27 +14,36 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MappingGui extends JFrame {
+    // Main Layout
     public JPanel mainPanel;
-    public JPanel toolbarPanel;
     public BorderLayout mainLayout;
+
+    // Toolbar
+    public JPanel toolbarPanel;
     public FlowLayout toolbarLayout;
 
     public JTextField searchField;
     public JButton searchButton;
 
+    public JButton reloadButton;
+
+    // Split panes
     public JSplitPane mainSplitPane;
     public JSplitPane methodFieldSplitPane;
 
+    // Class Table
     public JTable classTable;
     public DefaultTableModel classTableModel;
 
-
+    // Method Table
     public JTable methodTable;
     public DefaultTableModel methodTableModel;
 
+    // Field Table
     public JTable fieldTable;
     public DefaultTableModel fieldTableModel;
 
+    // Loader
     public MappingLoader loader;
 
     public MappingGui(MappingLoader loader) throws HeadlessException {
@@ -71,9 +80,12 @@ public class MappingGui extends JFrame {
         searchField = new JTextField("", 40);
         searchButton = new JButton("Search");
 
+        reloadButton = new JButton("Reload");
+
         // Add toolbar items to toolbar panel
         toolbarPanel.add(searchField);
         toolbarPanel.add(searchButton);
+        toolbarPanel.add(reloadButton);
 
         // Add toolbar panel to main panel
         mainPanel.add(toolbarPanel, BorderLayout.NORTH);
@@ -84,7 +96,7 @@ public class MappingGui extends JFrame {
 
         // Create Table for Class Mapping Entries
         classTable = new JTable(classTableModel);
-        classTable.setBounds(0, 0, 1280, 720);
+//        classTable.setBounds(0, 0, 1280, 720);
         classTable.setAutoCreateRowSorter(true);
         classTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         classTable.setRowSelectionAllowed(false);
@@ -104,12 +116,13 @@ public class MappingGui extends JFrame {
         // Create Methods Table
         methodTable = new JTable(methodTableModel);
         methodTable.setBackground(Color.CYAN);
-        methodTable.setPreferredSize(new Dimension(600, 200));
-        methodTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);;
+        methodTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         methodTable.setAutoCreateRowSorter(true);
         methodTable.setRowSelectionAllowed(false);
         methodTable.setColumnSelectionAllowed(false);
-        methodFieldSplitPane.add(methodTable);
+        methodTable.setDefaultEditor(Object.class, null);
+        JScrollPane methodScrollPane = new JScrollPane(methodTable);
+        methodFieldSplitPane.add(methodScrollPane);
 
         // Create Field Table
         fieldTable = new JTable(fieldTableModel);
@@ -118,7 +131,13 @@ public class MappingGui extends JFrame {
         fieldTable.setAutoCreateRowSorter(true);
         fieldTable.setRowSelectionAllowed(false);
         fieldTable.setColumnSelectionAllowed(false);
-        methodFieldSplitPane.add(fieldTable);
+        fieldTable.setDefaultEditor(Object.class, null);
+        JScrollPane fieldScrollPane = new JScrollPane(fieldTable);
+        methodFieldSplitPane.add(fieldScrollPane);
+
+        // Set Panel Resize Weights
+        mainSplitPane.setResizeWeight(0.6d);
+        methodFieldSplitPane.setResizeWeight(0.4d);
 
         // Add split pane to main panel
         mainPanel.add(mainSplitPane, BorderLayout.CENTER);
