@@ -144,11 +144,10 @@ public class MappingLoader {
                             String[] mcpName = item.getName(0).split("/");
                             classEntry.mcp = mcpName[mcpName.length - 1];
 
-                            System.out.println("CLASS " + classEntry.mcp);
+                            System.out.println("\nCLASS " + classEntry.mcp);
                             for (var method : item.getMethods()){
-                                System.out.println(method);
+                                System.out.println(method.getSrcDesc() + " -> " + method.getDesc(0) + " | Hash : " + method.hashCode());
                                 for (var class_method : classEntry.methods.values()){
-                                    System.out.println();
                                 }
                             }
                         }
@@ -178,7 +177,7 @@ public class MappingLoader {
         try {
             MappingReader.read(mappingSet.path, mappingSet.format, babric);
 
-            for (var item : babric.getClasses()) {
+            for (MappingTree.ClassMapping item : babric.getClasses()) {
 
                 String obfuscatedName = item.getSrcName();
 
@@ -190,9 +189,10 @@ public class MappingLoader {
                 }
 
                 // Methods
-//                for (MappingTree.MethodMapping method : item.getMethods()){
-//                    System.out.println("Class : " + item.getName("target") + "." + method.getName("target"));
-//                }
+                System.out.println("\nCLASS " + className);
+                for (MappingTree.MethodMapping method : item.getMethods()){
+                    System.out.println(method.getSrcDesc() + " -> " + method.getDesc("target") + " | Hash : " + method.hashCode());
+                }
             }
 
         } catch (IOException e) {
