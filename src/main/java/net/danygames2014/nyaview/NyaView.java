@@ -53,6 +53,7 @@ public class NyaView {
                 for (var item : result) {
                     System.out.println(item);
                 }
+                System.out.println("Found " + result.size() + (result.size() > 1 ? " results" : " result"));
             }
         }
     }
