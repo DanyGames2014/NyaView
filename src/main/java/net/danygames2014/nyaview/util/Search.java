@@ -166,7 +166,7 @@ public class Search {
                 if (classEntry.match(parameters)) {
                     classMatches = true;
                     if (parameters.filterType == FilterType.SUPERSTRICT) {
-
+                        found.add(classEntry.niceString(true));
                     }
                 }
             }
@@ -176,7 +176,11 @@ public class Search {
                 for (var methodEntry : classEntry.methods) {
                     if (methodEntry.match(parameters)) {
                         classMatches = true;
+                        if (parameters.filterType == FilterType.SUPERSTRICT) {
+                            found.add(methodEntry.niceString(true));
+                        }
                     }
+
                 }
             }
 
@@ -185,6 +189,9 @@ public class Search {
                 for (var fieldEntry : classEntry.fields) {
                     if (fieldEntry.match(parameters)) {
                         classMatches = true;
+                        if (parameters.filterType == FilterType.SUPERSTRICT) {
+                            found.add(fieldEntry.niceString(true));
+                        }
                     }
                 }
             }
@@ -238,7 +245,7 @@ public class Search {
 
         @Override
         public String toString() {
-            return "\nSearchParameters:" +
+            return "SearchParameters:" +
                     "\n  searchType = " + searchType +
                     "\n  filterType = " + filterType +
                     "\n  mappings = " + mappings +
