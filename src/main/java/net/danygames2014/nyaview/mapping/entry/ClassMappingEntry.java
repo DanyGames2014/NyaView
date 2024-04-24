@@ -207,13 +207,18 @@ public class ClassMappingEntry implements Searchable {
         }
 
         if (!superstrict) {
-            sb.append("\n   Methods : ");
-            for (var method : methods) {
-                sb.append(method.niceString(false));
+            if(!methods.isEmpty()){
+                sb.append("\n   Methods : ");
+                for (var method : methods) {
+                    sb.append(method.niceString(false));
+                }
             }
-            sb.append("\n   Fields : ");
-            for (var fields : fields) {
-                sb.append(fields.niceString(false));
+
+            if(!fields.isEmpty()){
+                sb.append("\n   Fields : ");
+                for (var fields : fields) {
+                    sb.append(fields.niceString(false));
+                }
             }
         }
 
