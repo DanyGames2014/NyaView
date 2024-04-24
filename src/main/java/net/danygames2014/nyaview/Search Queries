@@ -1,0 +1,21 @@
+Searching Parameters
+CLASS / METHOD / FIELD
+INTERMEDIARY <id> / OBFUSCATED <id> <client/server/both> / BABRIC <id> / MCP <id> <client/server/both> / CARPET-BOMB
+FUZZY / STRICT
+
+[<c(lass) | m(ethod) | f(ield)> [i | o/oc/os | b | m/mc/ms] <? | !>]
+
+arg1
+c - class
+m - method
+f - field
+
+arg2
+i - intermediary
+o - obfuscated | oc - obfuscated client | os - obfuscated server
+b - babric
+m - mcp | mc - mcp client | ms - mcp server
+
+arg3
+? - fuzzy
+! - strict
