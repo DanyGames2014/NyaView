@@ -1,5 +1,6 @@
 package net.danygames2014.nyaview.util.descriptor;
 
+import net.danygames2014.nyaview.mapping.entry.ClassPath;
 import net.danygames2014.nyaview.mapping.entry.Method;
 
 import java.util.ArrayList;
@@ -23,19 +24,16 @@ public class Descriptor {
     }
 
     public static String niceString(Method method) {
-        if (method.desc == null) {
-            System.out.println("AAAA");
-        }
         Descriptor descriptor = DescriptorParser.parseDescriptor(method.desc);
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(descriptor.returnType).append(" ").append(method.name).append("(");
+        sb.append(ClassPath.fromName(descriptor.returnType).name).append(" ").append(ClassPath.fromName(method.name).name).append("(");
         for (int i = 0; i < descriptor.args.size(); i++) {
-            sb.append(descriptor.args.get(i));
+            sb.append(ClassPath.fromName(descriptor.args.get(i)).name);
 
             if (method.args.size() > i) {
-                sb.append(" ").append(method.args.get(i));
+                sb.append(" ").append(ClassPath.fromName(method.args.get(i)).name);
             }
 
             if (!(i == descriptor.args.size() - 1)) {
