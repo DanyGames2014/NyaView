@@ -3,7 +3,6 @@ package net.danygames2014.nyaview.config;
 import blue.endless.jankson.Jankson;
 import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.api.SyntaxError;
-import net.danygames2014.nyaview.NyaView;
 import net.danygames2014.nyaview.mapping.MappingType;
 import net.danygames2014.nyaview.mapping.Mappings;
 import net.danygames2014.nyaview.util.Logger;
@@ -38,8 +37,8 @@ public class Config {
         return false;
     }
 
-    public static boolean writeConfig(){
-       return writeConfig(false);
+    public static boolean writeConfig() {
+        return writeConfig(false);
     }
 
     public static boolean writeConfig(boolean reset) {

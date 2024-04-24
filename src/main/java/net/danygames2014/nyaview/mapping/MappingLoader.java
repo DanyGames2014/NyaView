@@ -83,7 +83,7 @@ public class MappingLoader {
 
                     // Args
                     ArrayList<String> args = new ArrayList<>();
-                    for (var argument : method.getArgs()){
+                    for (var argument : method.getArgs()) {
                         args.add(argument.getDstName(0));
                     }
                     methodMapping.args = args;
@@ -190,7 +190,7 @@ public class MappingLoader {
 
                             // Args
                             ArrayList<String> args = new ArrayList<>();
-                            for (var argument : method.getArgs()){
+                            for (var argument : method.getArgs()) {
                                 args.add(argument.getDstName(0));
                             }
                             methodMapping.args = args;
@@ -246,7 +246,7 @@ public class MappingLoader {
 
                             // Args
                             ArrayList<String> args = new ArrayList<>();
-                            for (var argument : method.getArgs()){
+                            for (var argument : method.getArgs()) {
                                 args.add(argument.getDstName(0));
                             }
                             methodMapping.args = args;
@@ -432,7 +432,7 @@ public class MappingLoader {
                         methodEntry.obfuscatedClient.desc = method.getDesc("client");
 
                         ArrayList<String> args = new ArrayList<>();
-                        for (var argument : method.getArgs()){
+                        for (var argument : method.getArgs()) {
                             args.add(argument.getName("client"));
                         }
                         methodEntry.obfuscatedClient.args = args;
@@ -451,7 +451,7 @@ public class MappingLoader {
                         methodEntry.obfuscatedServer.desc = method.getDesc("server");
 
                         ArrayList<String> args = new ArrayList<>();
-                        for (var argument : method.getArgs()){
+                        for (var argument : method.getArgs()) {
                             args.add(argument.getName("server"));
                         }
                         methodEntry.obfuscatedServer.args = args;
@@ -465,7 +465,7 @@ public class MappingLoader {
                     // Intermediary
                     Method methodMapping = new Method();
                     methodMapping.name = method.getSrcName();
-                    methodMapping.desc =method.getSrcDesc();
+                    methodMapping.desc = method.getSrcDesc();
                     methodEntry.intermediary.put(mappingSet, methodMapping);
 
                     if (existingMethodEntry == null) {

@@ -1,7 +1,5 @@
 package net.danygames2014.nyaview.util.descriptor;
 
-import net.danygames2014.nyaview.NyaView;
-
 public class DescriptorParser {
     public static Descriptor parseDescriptor(String toParse) {
         Descriptor descriptor = new Descriptor();

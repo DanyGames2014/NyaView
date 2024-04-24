@@ -22,8 +22,8 @@ public class Descriptor {
                 '}';
     }
 
-    public static String niceString(Method method){
-        if(method.desc == null){
+    public static String niceString(Method method) {
+        if (method.desc == null) {
             System.out.println("AAAA");
         }
         Descriptor descriptor = DescriptorParser.parseDescriptor(method.desc);
@@ -34,7 +34,7 @@ public class Descriptor {
         for (int i = 0; i < descriptor.args.size(); i++) {
             sb.append(descriptor.args.get(i));
 
-            if(method.args.size() > i){
+            if (method.args.size() > i) {
                 sb.append(" ").append(method.args.get(i));
             }
 

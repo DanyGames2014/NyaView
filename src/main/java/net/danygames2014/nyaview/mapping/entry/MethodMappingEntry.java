@@ -7,7 +7,6 @@ import net.danygames2014.nyaview.util.Environment;
 import net.danygames2014.nyaview.util.Search;
 import net.danygames2014.nyaview.util.Searchable;
 import net.danygames2014.nyaview.util.descriptor.Descriptor;
-import net.danygames2014.nyaview.util.descriptor.DescriptorParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -86,15 +85,15 @@ public class MethodMappingEntry implements Searchable {
     @Override
     public String toString() {
         return
-            "\n      METHOD" +
-            "\n         environment = " + environment +
-            "\n         obfuscatedClient = " + obfuscatedClient +
-            "\n         obfuscatedServer = " + obfuscatedServer +
-            "\n         obfuscatedClientDesc = " + obfuscatedClient.desc +
-            "\n         obfuscatedServerDesc = " + obfuscatedServer.desc +
-            "\n         mcp = " + mcp +
-            "\n         intermediary = " + intermediary +
-            "\n         babric = " + babric + "\n";
+                "\n      METHOD" +
+                        "\n         environment = " + environment +
+                        "\n         obfuscatedClient = " + obfuscatedClient +
+                        "\n         obfuscatedServer = " + obfuscatedServer +
+                        "\n         obfuscatedClientDesc = " + obfuscatedClient.desc +
+                        "\n         obfuscatedServerDesc = " + obfuscatedServer.desc +
+                        "\n         mcp = " + mcp +
+                        "\n         intermediary = " + intermediary +
+                        "\n         babric = " + babric + "\n";
     }
 
     @Override

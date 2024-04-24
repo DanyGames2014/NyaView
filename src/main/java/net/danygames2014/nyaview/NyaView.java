@@ -47,9 +47,9 @@ public class NyaView {
             System.out.println(parameters);
 
             ArrayList<String> result = search(parameters);
-            if(result.isEmpty()){
+            if (result.isEmpty()) {
                 System.err.println("No Results");
-            }else{
+            } else {
                 for (var item : result) {
                     System.out.println(item);
                 }

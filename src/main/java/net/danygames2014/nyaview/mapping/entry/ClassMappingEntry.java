@@ -206,13 +206,13 @@ public class ClassMappingEntry implements Searchable {
             sb.append(mapping.getKey().name + "=" + mapping.getValue().name + "  ");
         }
 
-        if(!superstrict){
+        if (!superstrict) {
             sb.append("\n   Methods : ");
-            for (var method : methods){
+            for (var method : methods) {
                 sb.append(method.niceString(false));
             }
             sb.append("\n   Fields : ");
-            for (var fields : fields){
+            for (var fields : fields) {
                 sb.append(fields.niceString(false));
             }
         }

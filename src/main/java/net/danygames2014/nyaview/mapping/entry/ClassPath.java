@@ -14,7 +14,7 @@ public class ClassPath {
         this.name = name;
     }
 
-    public static ClassPath fromName(String name){
+    public static ClassPath fromName(String name) {
         String[] srcname = name.split("/");
         StringBuilder pkg = new StringBuilder(srcname.length - 1);
         for (int i = 0; i < srcname.length - 1; i++) {
@@ -24,18 +24,18 @@ public class ClassPath {
                 pkg.append(".");
             }
         }
-        return new ClassPath(pkg.toString(), srcname[srcname.length-1]);
+        return new ClassPath(pkg.toString(), srcname[srcname.length - 1]);
     }
 
     public String getFullPath() {
         return pkg.replace('.', '/') + "/" + name;
     }
 
-    public String getPackage(){
+    public String getPackage() {
         return pkg;
     }
 
-    public String getClassName(){
+    public String getClassName() {
         return name;
     }
 

@@ -165,7 +165,7 @@ public class Search {
             if (parameters.searchType == SearchType.CLASS || parameters.searchType == SearchType.CARPET_BOMB) {
                 if (classEntry.match(parameters)) {
                     classMatches = true;
-                    if(parameters.filterType == FilterType.SUPERSTRICT){
+                    if (parameters.filterType == FilterType.SUPERSTRICT) {
 
                     }
                 }
@@ -189,7 +189,7 @@ public class Search {
                 }
             }
 
-            if(classMatches && parameters.filterType != FilterType.SUPERSTRICT){
+            if (classMatches && parameters.filterType != FilterType.SUPERSTRICT) {
                 found.add(classEntry.niceString(false));
             }
         }

@@ -3,10 +3,8 @@ package net.danygames2014.nyaview.mapping.entry;
 import net.danygames2014.nyaview.NyaView;
 import net.danygames2014.nyaview.mapping.MappingType;
 import net.danygames2014.nyaview.mapping.Mappings;
-import net.danygames2014.nyaview.util.Environment;
 import net.danygames2014.nyaview.util.Search;
 import net.danygames2014.nyaview.util.Searchable;
-import net.danygames2014.nyaview.util.Util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,29 +33,29 @@ public class FieldMappingEntry implements Searchable {
     }
 
     // MCP
-    public String getMcpName(Mappings mappings){
+    public String getMcpName(Mappings mappings) {
         return mcp.get(mappings);
     }
 
-    public String getMcpName(String id){
+    public String getMcpName(String id) {
         return mcp.get(NyaView.config.getMappings(id));
     }
 
     // Intermediary
-    public String getIntermediaryName(Mappings mappings){
+    public String getIntermediaryName(Mappings mappings) {
         return intermediary.get(mappings);
     }
 
-    public String getIntermediaryName(String id){
+    public String getIntermediaryName(String id) {
         return intermediary.get(NyaView.config.getMappings(id));
     }
 
     // Fabric
-    public String getBabricName(Mappings mappings){
+    public String getBabricName(Mappings mappings) {
         return babric.get(mappings);
     }
 
-    public String getBabricName(String id){
+    public String getBabricName(String id) {
         return babric.get(NyaView.config.getMappings(id));
     }
 
@@ -65,53 +63,53 @@ public class FieldMappingEntry implements Searchable {
     public String toString() {
         return
                 "\n      FIELD" +
-                "\n         obfuscatedClient = " + obfuscatedClient +
-                "\n         obfuscatedServer = " + obfuscatedServer +
-                "\n         mcp = " + mcp +
-                "\n         intermediary = " + intermediary +
-                "\n         babric = " + babric + "\n";
+                        "\n         obfuscatedClient = " + obfuscatedClient +
+                        "\n         obfuscatedServer = " + obfuscatedServer +
+                        "\n         mcp = " + mcp +
+                        "\n         intermediary = " + intermediary +
+                        "\n         babric = " + babric + "\n";
     }
 
     @Override
     public boolean match(Search.SearchParameters parameters) {
-        if(parameters.searchType == Search.SearchType.FIELD || parameters.searchType == Search.SearchType.CARPET_BOMB){
-            if(parameters.mappings == INTERMEDIARY || parameters.mappings == ALL){
-                for (String item : intermediary.values()){
-                    if(filter(item, parameters)){
+        if (parameters.searchType == Search.SearchType.FIELD || parameters.searchType == Search.SearchType.CARPET_BOMB) {
+            if (parameters.mappings == INTERMEDIARY || parameters.mappings == ALL) {
+                for (String item : intermediary.values()) {
+                    if (filter(item, parameters)) {
                         return true;
                     }
                 }
             }
-            if(parameters.mappings == OBFUSCATED || parameters.mappings == OBFUSCATED_CLIENT || parameters.mappings == ALL){
-                if(filter(obfuscatedClient, parameters)){
+            if (parameters.mappings == OBFUSCATED || parameters.mappings == OBFUSCATED_CLIENT || parameters.mappings == ALL) {
+                if (filter(obfuscatedClient, parameters)) {
                     return true;
                 }
             }
-            if(parameters.mappings == OBFUSCATED || parameters.mappings == OBFUSCATED_SERVER || parameters.mappings == ALL){
-                if(filter(obfuscatedServer, parameters)){
+            if (parameters.mappings == OBFUSCATED || parameters.mappings == OBFUSCATED_SERVER || parameters.mappings == ALL) {
+                if (filter(obfuscatedServer, parameters)) {
                     return true;
                 }
             }
-            if(parameters.mappings == BABRIC || parameters.mappings == ALL){
-                for (String item : babric.values()){
-                    if(filter(item, parameters)){
+            if (parameters.mappings == BABRIC || parameters.mappings == ALL) {
+                for (String item : babric.values()) {
+                    if (filter(item, parameters)) {
                         return true;
                     }
                 }
             }
-            if(parameters.mappings == MCP || parameters.mappings == MCP_CLIENT || parameters.mappings == ALL){
-                for (Map.Entry<Mappings, String> item : mcp.entrySet()){
-                    if(item.getKey().type == MappingType.MCP_CLIENT){
-                        if(filter(item.getValue(), parameters)){
+            if (parameters.mappings == MCP || parameters.mappings == MCP_CLIENT || parameters.mappings == ALL) {
+                for (Map.Entry<Mappings, String> item : mcp.entrySet()) {
+                    if (item.getKey().type == MappingType.MCP_CLIENT) {
+                        if (filter(item.getValue(), parameters)) {
                             return true;
                         }
                     }
                 }
             }
-            if(parameters.mappings == MCP || parameters.mappings == MCP_SERVER || parameters.mappings == ALL){
-                for (Map.Entry<Mappings, String> item : mcp.entrySet()){
-                    if(item.getKey().type == MappingType.MCP_SERVER){
-                        if(filter(item.getValue(), parameters)){
+            if (parameters.mappings == MCP || parameters.mappings == MCP_SERVER || parameters.mappings == ALL) {
+                for (Map.Entry<Mappings, String> item : mcp.entrySet()) {
+                    if (item.getKey().type == MappingType.MCP_SERVER) {
+                        if (filter(item.getValue(), parameters)) {
                             return true;
                         }
                     }
