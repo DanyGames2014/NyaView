@@ -1,0 +1,158 @@
+{
+	"mappings": [
+		{
+			// Identifier of the mappings
+			"id": "babric",
+			// Human readable name
+			"name": "Babric",
+			// Mapping Type
+			"type": "INTERMEDIARY",
+			// Path to the mappings in the mappings directory
+			"path": "babric.tiny",
+			// Maping Format
+			"format": "TINY_2_FILE",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": null
+		},
+		{
+			// Identifier of the mappings
+			"id": "cursed-legacy",
+			// Human readable name
+			"name": "Cursed Legacy",
+			// Mapping Type
+			"type": "INTERMEDIARY",
+			// Path to the mappings in the mappings directory
+			"path": "cursed-legacy.tiny",
+			// Maping Format
+			"format": "TINY_FILE",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": null
+		},
+		{
+			// Identifier of the mappings
+			"id": "mcp-client",
+			// Human readable name
+			"name": "MCP Client",
+			// Mapping Type
+			"type": "MCP_CLIENT",
+			// Path to the mappings in the mappings directory
+			"path": "mcp-client.tiny",
+			// Maping Format
+			"format": "TINY_2_FILE",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": null
+		},
+		{
+			// Identifier of the mappings
+			"id": "mcp-server",
+			// Human readable name
+			"name": "MCP Server",
+			// Mapping Type
+			"type": "MCP_SERVER",
+			// Path to the mappings in the mappings directory
+			"path": "mcp-server.tiny",
+			// Maping Format
+			"format": "TINY_2_FILE",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": null
+		},
+		{
+			// Identifier of the mappings
+			"id": "biny",
+			// Human readable name
+			"name": "BINY",
+			// Mapping Type
+			"type": "BABRIC",
+			// Path to the mappings in the mappings directory
+			"path": "biny",
+			// Maping Format
+			"format": "ENIGMA_DIR",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": "babric"
+		},
+		{
+			// Identifier of the mappings
+			"id": "bin",
+			// Human readable name
+			"name": "BIN",
+			// Mapping Type
+			"type": "BABRIC",
+			// Path to the mappings in the mappings directory
+			"path": "bin",
+			// Maping Format
+			"format": "ENIGMA_DIR",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": "babric"
+		},
+		{
+			// Identifier of the mappings
+			"id": "nya",
+			// Human readable name
+			"name": "NYA",
+			// Mapping Type
+			"type": "BABRIC",
+			// Path to the mappings in the mappings directory
+			"path": "nya",
+			// Maping Format
+			"format": "ENIGMA_DIR",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": "babric"
+		},
+		{
+			// Identifier of the mappings
+			"id": "bin-bh",
+			// Human readable name
+			"name": "BIN-BH",
+			// Mapping Type
+			"type": "BABRIC",
+			// Path to the mappings in the mappings directory
+			"path": "bin-bh",
+			// Maping Format
+			"format": "ENIGMA_DIR",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": "babric"
+		},
+		{
+			// Identifier of the mappings
+			"id": "plasma",
+			// Human readable name
+			"name": "Plasma",
+			// Mapping Type
+			"type": "BABRIC",
+			// Path to the mappings in the mappings directory
+			"path": "plasma",
+			// Maping Format
+			"format": "ENIGMA_DIR",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": "cursed-legacy"
+		},
+		{
+			// Identifier of the mappings
+			"id": "flint-client",
+			// Human readable name
+			"name": "Flint Client",
+			// Mapping Type
+			"type": "MCP_CLIENT",
+			// Path to the mappings in the mappings directory
+			"path": "flint-client",
+			// Maping Format
+			"format": "ENIGMA_DIR",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": ""
+		},
+		{
+			// Identifier of the mappings
+			"id": "flint-server",
+			// Human readable name
+			"name": "Flint Server",
+			// Mapping Type
+			"type": "MCP_SERVER",
+			// Path to the mappings in the mappings directory
+			"path": "flint-server",
+			// Maping Format
+			"format": "ENIGMA_DIR",
+			// Parent Mapping ID (used for Intermediary based Fabric mappings)
+			"parentId": ""
+		}
+	]
+}
