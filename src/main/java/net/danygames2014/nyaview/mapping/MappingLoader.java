@@ -326,7 +326,7 @@ public class MappingLoader {
 
     public FieldMappingEntry findServerField(ClassMappingEntry classEntry, String obfServer) {
         for (var fieldEntry : classEntry.fields) {
-            if (fieldEntry.obfuscatedClient.equals(obfServer)) {
+            if (fieldEntry.obfuscatedServer.equals(obfServer)) {
                 return fieldEntry;
             }
         }
