@@ -10,8 +10,13 @@ import java.util.HashMap;
 public class SearchResult {
     public HashMap<ClassMappingEntry, SearchResultClassEntry> results;
 
+    public int methodCount;
+    public int fieldCount;
+
     public SearchResult() {
         results = new HashMap<>();
+        methodCount = 0;
+        fieldCount = 0;
     }
 
     public void add(ClassMappingEntry classEntry) {
@@ -22,19 +27,22 @@ public class SearchResult {
         if (!results.containsKey(classEntry)) {
             results.put(classEntry, new SearchResultClassEntry());
         }
+        
+        results.get(classEntry).classMatched();
     }
 
     public void add(MethodMappingEntry methodEntry) {
         if (methodEntry == null) {
             return;
         }
-        
+
         if (!results.containsKey(methodEntry.classEntry)) {
             results.put(methodEntry.classEntry, new SearchResultClassEntry());
         }
-        
+
         if (!results.get(methodEntry.classEntry).methods.contains(methodEntry)) {
             results.get(methodEntry.classEntry).methods.add(methodEntry);
+            methodCount++;
         }
     }
 
@@ -49,16 +57,23 @@ public class SearchResult {
 
         if (!results.get(fieldEntry.classEntry).fields.contains(fieldEntry)) {
             results.get(fieldEntry.classEntry).fields.add(fieldEntry);
+            fieldCount++;
         }
     }
 
     public static final class SearchResultClassEntry {
+        public boolean classMatch;
         public final ArrayList<MethodMappingEntry> methods;
         public final ArrayList<FieldMappingEntry> fields;
 
         public SearchResultClassEntry() {
+            classMatch = false;
             this.methods = new ArrayList<>();
             this.fields = new ArrayList<>();
+        }
+
+        public void classMatched() {
+            classMatch = true;
         }
     }
 }
