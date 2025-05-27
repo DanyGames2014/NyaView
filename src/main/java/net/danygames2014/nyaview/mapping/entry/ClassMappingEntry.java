@@ -5,6 +5,7 @@ import net.danygames2014.nyaview.mapping.Environment;
 import net.danygames2014.nyaview.mapping.Intermediary;
 import net.danygames2014.nyaview.mapping.MappingType;
 import net.danygames2014.nyaview.mapping.Mappings;
+import net.danygames2014.nyaview.search.DisplayParameters;
 import net.danygames2014.nyaview.search.OldSearch;
 import net.danygames2014.nyaview.search.SearchParameters;
 import net.danygames2014.nyaview.search.SearchParameters.SearchMappings;
@@ -125,6 +126,11 @@ public class ClassMappingEntry implements Searchable {
         }
 
         return false;
+    }
+
+    @Override
+    public String searchString(DisplayParameters parameters) {
+        return "";
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.danygames2014.nyaview.mapping.entry;
 
+import net.danygames2014.nyaview.search.DisplayParameters;
 import net.danygames2014.nyaview.search.OldSearch;
 import net.danygames2014.nyaview.Searchable;
 import net.danygames2014.nyaview.mapping.Environment;
@@ -118,6 +119,11 @@ public class FieldMappingEntry implements Searchable {
         }
         
         return false;
+    }
+
+    @Override
+    public String searchString(DisplayParameters parameters) {
+        return "";
     }
 
     @Override
