@@ -1,7 +1,6 @@
 package net.danygames2014.nyaview.mapping.entry;
 
 import net.danygames2014.nyaview.search.DisplayParameters;
-import net.danygames2014.nyaview.search.OldSearch;
 import net.danygames2014.nyaview.Searchable;
 import net.danygames2014.nyaview.mapping.Environment;
 import net.danygames2014.nyaview.mapping.Intermediary;
@@ -14,8 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static net.danygames2014.nyaview.Util.filter;
-import static net.danygames2014.nyaview.search.OldSearch.SearchMappings.*;
-import static net.danygames2014.nyaview.Util.oldFilter;
 
 public class FieldMappingEntry implements Searchable {
     // Parent Class
@@ -124,55 +121,6 @@ public class FieldMappingEntry implements Searchable {
     @Override
     public String searchString(DisplayParameters parameters) {
         return "";
-    }
-
-    @Override
-    public boolean oldMatch(OldSearch.SearchParameters parameters) {
-        if (parameters.searchType == OldSearch.SearchType.FIELD || parameters.searchType == OldSearch.SearchType.CARPET_BOMB) {
-            if (parameters.mappings == INTERMEDIARY || parameters.mappings == ALL) {
-                for (String item : intermediary.values()) {
-                    if (oldFilter(item, parameters)) {
-                        return true;
-                    }
-                }
-            }
-            if (parameters.mappings == OBFUSCATED || parameters.mappings == OBFUSCATED_CLIENT || parameters.mappings == ALL) {
-                if (oldFilter(obfuscatedClient, parameters)) {
-                    return true;
-                }
-            }
-            if (parameters.mappings == OBFUSCATED || parameters.mappings == OBFUSCATED_SERVER || parameters.mappings == ALL) {
-                if (oldFilter(obfuscatedServer, parameters)) {
-                    return true;
-                }
-            }
-            if (parameters.mappings == BABRIC || parameters.mappings == ALL) {
-                for (String item : babric.values()) {
-                    if (oldFilter(item, parameters)) {
-                        return true;
-                    }
-                }
-            }
-            if (parameters.mappings == MCP || parameters.mappings == MCP_CLIENT || parameters.mappings == ALL) {
-                for (Map.Entry<Mappings, String> item : mcp.entrySet()) {
-                    if (item.getKey().type == MappingType.MCP && item.getKey().environment == Environment.CLIENT) {
-                        if (oldFilter(item.getValue(), parameters)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-            if (parameters.mappings == MCP || parameters.mappings == MCP_SERVER || parameters.mappings == ALL) {
-                for (Map.Entry<Mappings, String> item : mcp.entrySet()) {
-                    if (item.getKey().type == MappingType.MCP && item.getKey().environment == Environment.SERVER) {
-                        if (oldFilter(item.getValue(), parameters)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     public String niceString(boolean noChildren) {

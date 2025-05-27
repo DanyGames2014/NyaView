@@ -1,6 +1,5 @@
 package net.danygames2014.nyaview;
 
-import net.danygames2014.nyaview.search.OldSearch;
 import net.danygames2014.nyaview.search.SearchParameters;
 
 import java.nio.file.Path;
@@ -33,18 +32,6 @@ public class Util {
                 } else {
                     return input.equalsIgnoreCase(parameters.query);
                 }
-            }
-        }
-        return false;
-    }
-
-    public static boolean oldFilter(String input, OldSearch.SearchParameters parameters) {
-        switch (parameters.filterType) {
-            case FUZZY -> {
-                return input.toLowerCase().contains(parameters.query);
-            }
-            case STRICT, SUPERSTRICT -> {
-                return input.toLowerCase().equals(parameters.query);
             }
         }
         return false;

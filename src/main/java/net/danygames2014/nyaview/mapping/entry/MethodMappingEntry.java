@@ -7,7 +7,6 @@ import net.danygames2014.nyaview.mapping.Intermediary;
 import net.danygames2014.nyaview.mapping.MappingType;
 import net.danygames2014.nyaview.mapping.Mappings;
 import net.danygames2014.nyaview.search.DisplayParameters;
-import net.danygames2014.nyaview.search.OldSearch;
 import net.danygames2014.nyaview.search.SearchParameters;
 import net.danygames2014.nyaview.search.SearchParameters.SearchMappings;
 import net.danygames2014.nyaview.search.SearchParameters.SearchType;
@@ -16,8 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static net.danygames2014.nyaview.Util.filter;
-import static net.danygames2014.nyaview.Util.oldFilter;
-import static net.danygames2014.nyaview.search.OldSearch.SearchMappings.*;
 
 public class MethodMappingEntry implements Searchable {
     // Parent Class
@@ -154,55 +151,6 @@ public class MethodMappingEntry implements Searchable {
     @Override
     public String searchString(DisplayParameters parameters) {
         return "";
-    }
-
-    @Override
-    public boolean oldMatch(OldSearch.SearchParameters parameters) {
-        if (parameters.searchType == OldSearch.SearchType.METHOD || parameters.searchType == OldSearch.SearchType.CARPET_BOMB) {
-            if (parameters.mappings == INTERMEDIARY || parameters.mappings == ALL) {
-                for (Method item : intermediary.values()) {
-                    if (oldFilter(item.name, parameters)) {
-                        return true;
-                    }
-                }
-            }
-            if (parameters.mappings == OBFUSCATED || parameters.mappings == OBFUSCATED_CLIENT || parameters.mappings == ALL) {
-                if (oldFilter(obfuscatedClient.name, parameters)) {
-                    return true;
-                }
-            }
-            if (parameters.mappings == OBFUSCATED || parameters.mappings == OBFUSCATED_SERVER || parameters.mappings == ALL) {
-                if (oldFilter(obfuscatedServer.name, parameters)) {
-                    return true;
-                }
-            }
-            if (parameters.mappings == BABRIC || parameters.mappings == ALL) {
-                for (Method item : babric.values()) {
-                    if (oldFilter(item.name, parameters)) {
-                        return true;
-                    }
-                }
-            }
-            if (parameters.mappings == MCP || parameters.mappings == MCP_CLIENT || parameters.mappings == ALL) {
-                for (Map.Entry<Mappings, Method> item : mcp.entrySet()) {
-                    if (item.getKey().type == MappingType.MCP && item.getKey().environment == Environment.CLIENT) {
-                        if (oldFilter(item.getValue().name, parameters)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-            if (parameters.mappings == MCP || parameters.mappings == MCP_SERVER || parameters.mappings == ALL) {
-                for (Map.Entry<Mappings, Method> item : mcp.entrySet()) {
-                    if (item.getKey().type == MappingType.MCP && item.getKey().environment == Environment.SERVER) {
-                        if (oldFilter(item.getValue().name, parameters)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     public String niceString(boolean noChildren) {
