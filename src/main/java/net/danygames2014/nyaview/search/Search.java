@@ -8,16 +8,20 @@ import static net.danygames2014.nyaview.search.SearchParameters.*;
 
 public class Search {
     // Current Parameter Defaults
-    public MatchType match = MatchType.FUZZY;
-    public boolean caseSensitive = false;
-    public SearchType type = SearchType.CARPET_BOMB;
-    public SearchMappings mappings = SearchMappings.ALL;
+    public static MatchType defaultMatch = MatchType.FUZZY;
+    public static boolean defaultCaseSensitive = false;
+    public static SearchType defaultType = SearchType.CARPET_BOMB;
+    public static SearchMappings defaultMappings = SearchMappings.ALL;
 
     // Current Display Parameters
-    public ClassDisplay classDisplay = ClassDisplay.FULL;
-    public Verbosity classVerbosity = Verbosity.FULL;
-    public Verbosity methodVerbosity = Verbosity.FULL;
-    public Verbosity fieldVerbosity = Verbosity.FULL;
+    public static ClassDisplay classDisplay = ClassDisplay.FULL;
+    public static Verbosity classVerbosity = Verbosity.FULL;
+    public static Verbosity methodVerbosity = Verbosity.FULL;
+    public static Verbosity fieldVerbosity = Verbosity.FULL;
+    
+    public static SearchResult search(String searchQuery) {
+        return search(SearchParameters.parse(searchQuery));
+    }
     
     public static SearchResult search(SearchParameters parameters) {
         SearchResult result = new SearchResult();
