@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@SuppressWarnings("unused")
 public class Config {
     private final YamlFile yamlFile;
     private final HashMap<String, Mappings> mappings;
