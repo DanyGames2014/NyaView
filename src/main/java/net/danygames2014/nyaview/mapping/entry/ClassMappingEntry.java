@@ -1,20 +1,21 @@
 package net.danygames2014.nyaview.mapping.entry;
 
-import net.danygames2014.nyaview.Searchable;
 import net.danygames2014.nyaview.mapping.Environment;
 import net.danygames2014.nyaview.mapping.Intermediary;
 import net.danygames2014.nyaview.mapping.MappingType;
 import net.danygames2014.nyaview.mapping.Mappings;
-import net.danygames2014.nyaview.search.DisplayParameters;
+import net.danygames2014.nyaview.search.DisplayParameters.ClassDisplay;
 import net.danygames2014.nyaview.search.SearchParameters;
 import net.danygames2014.nyaview.search.SearchParameters.SearchMappings;
 import net.danygames2014.nyaview.search.SearchParameters.SearchType;
+import net.danygames2014.nyaview.search.Searchable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import static net.danygames2014.nyaview.Util.filter;
+import static net.danygames2014.nyaview.search.DisplayParameters.Verbosity;
 
 public class ClassMappingEntry implements Searchable {
     // Environment of the class, whether it exists on server, client or both
@@ -67,7 +68,7 @@ public class ClassMappingEntry implements Searchable {
         if (parameters.type == SearchType.METHOD || parameters.type == SearchType.FIELD) {
             return false;
         }
-        
+
         // Intermediary
         if (parameters.mappings == SearchMappings.ALL || parameters.mappings == SearchMappings.INTERMEDIARY) {
             for (ClassPath item : intermediary.values()) {
@@ -125,12 +126,7 @@ public class ClassMappingEntry implements Searchable {
         return false;
     }
 
-    @Override
-    public String searchString(DisplayParameters parameters) {
-        return "";
-    }
-
-    public String niceString(boolean noChildren) {
+    public String searchString(ClassDisplay display, Verbosity verbosity, Verbosity methodVerbosity, Verbosity fieldVerbosity) {
         StringBuilder sb = new StringBuilder();
 
         // Header
@@ -156,30 +152,30 @@ public class ClassMappingEntry implements Searchable {
 
         // Named
         sb.append("\n   Mappings : ");
-//        sb.append("\n    ");
         for (var mapping : mcp.entrySet()) {
             sb.append("\n     ");
             sb.append(mapping.getKey().name + "=" + mapping.getValue().name + "  ");
         }
 
-//        sb.append("\n    ");
         for (var mapping : babric.entrySet()) {
             sb.append("\n     ");
             sb.append(mapping.getKey().name + "=" + mapping.getValue().name + "  ");
         }
 
-        if (!noChildren) {
+        if (display == ClassDisplay.FULL || display == ClassDisplay.ONLY_METHODS) {
             if (!methods.isEmpty()) {
                 sb.append("\n   Methods : ");
                 for (var method : methods) {
-                    sb.append(method.niceString(false));
+                    sb.append(method.searchString(methodVerbosity, true));
                 }
             }
+        }
 
+        if (display == ClassDisplay.FULL || display == ClassDisplay.ONLY_FIELDS) {
             if (!fields.isEmpty()) {
                 sb.append("\n   Fields : ");
                 for (var fields : fields) {
-                    sb.append(fields.niceString(false));
+                    sb.append(fields.searchString(fieldVerbosity, true));
                 }
             }
         }

@@ -1,7 +1,7 @@
 package net.danygames2014.nyaview.mapping.entry;
 
 import net.danygames2014.nyaview.search.DisplayParameters;
-import net.danygames2014.nyaview.Searchable;
+import net.danygames2014.nyaview.search.Searchable;
 import net.danygames2014.nyaview.mapping.Environment;
 import net.danygames2014.nyaview.mapping.Intermediary;
 import net.danygames2014.nyaview.mapping.MappingType;
@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static net.danygames2014.nyaview.Util.filter;
+import static net.danygames2014.nyaview.search.DisplayParameters.*;
 
 public class FieldMappingEntry implements Searchable {
     // Parent Class
@@ -118,14 +119,8 @@ public class FieldMappingEntry implements Searchable {
         return false;
     }
 
-    @Override
-    public String searchString(DisplayParameters parameters) {
-        return "";
-    }
-
-    public String niceString(boolean noChildren) {
-
-        String offset = noChildren ? "" : "      ";
+    public String searchString(Verbosity verbosity, boolean indent) {
+        String offset = indent ? "      " : "";
 
         StringBuilder sb = new StringBuilder();
 

@@ -5,7 +5,14 @@ public class DisplayParameters {
     public Verbosity classVerbosity;
     public Verbosity methodVerbosity;
     public Verbosity fieldVerbosity;
-    
+
+    public DisplayParameters() {
+        classDisplay = Search.classDisplay;
+        classVerbosity = Search.classVerbosity;
+        methodVerbosity = Search.methodVerbosity;
+        fieldVerbosity = Search.fieldVerbosity;
+    }
+
     public enum ClassDisplay {
         // Show info about the class, its methods and its fields
         FULL,

@@ -1,6 +1,6 @@
 package net.danygames2014.nyaview.search;
 
-import net.danygames2014.nyaview.NyaView;
+import net.danygames2014.nyaview.search.DisplayParameters.ClassDisplay;
 
 public class SearchParameters {
     public String query;
@@ -10,7 +10,7 @@ public class SearchParameters {
     public SearchMappings mappings;
 
     // This is actually a Display Parameter flag and has no effect on search
-    public boolean noChildren;
+    public ClassDisplay classDisplay;
 
     public SearchParameters() {
     }
@@ -24,28 +24,21 @@ public class SearchParameters {
         params.match = Search.defaultMatch;
         params.caseSensitive = Search.defaultCaseSensitive;
         params.mappings = Search.defaultMappings;
-        params.noChildren = false;
         params.query = query;
+        params.classDisplay = Search.classDisplay;
 
         // Parse the Search Query
         // Parse the divider which specifies the match type and some display parameters
-        String splitDivider = parseAndReturnDivider(query, params);
+        parseDivider(query, params);
 
-        String[] split;
+        // Split the query at the divider.
+        // String at index 0 will be stuff like search type parameter and mappings
+        // String at index 1 will be stuff like the query and case sensitivity indicator
+        String[] split = query.split("[?!]+", 2);
 
-        // If the split divider is not blank, split the query
-        if (!splitDivider.isBlank()) {
-            // Split the query at the divider.
-            // String at index 0 will be stuff like search type parameter and mappings
-            // String at index 1 will be stuff like the query and case sensitivity indicator
-            split = query.split(splitDivider);
-
-            // If for some reason the query was not split even tho there was a divider, return
-            if (split.length != 2) {
-                NyaView.LOGGER.warn("There was a split divider, but the query [" + query + "] was not split into 2 parts. It was split into " + split.length + " instead.");
-                split = new String[]{"", query};
-            }
-        } else {
+        // If for some reason the query was not split even tho there was a divider, return
+        if (split.length != 2) {
+            //NyaView.LOGGER.warn("Invalid amount of split dividers. The query [" + query + "] was not split into 2 parts. It was split into " + split.length + " instead.");
             split = new String[]{"", query};
         }
 
@@ -79,24 +72,24 @@ public class SearchParameters {
         return params;
     }
 
-    public static String parseAndReturnDivider(String query, SearchParameters params) {
-        if (query.contains("!!")) {
+    public static void parseDivider(String query, SearchParameters params) {
+        if (query.contains("!!!")) {
             params.match = MatchType.STRICT;
-            params.noChildren = true; // DisplayParam for Class Display
-            return "[!][!]";
+            params.classDisplay = ClassDisplay.NONE;
+        } else if (query.contains("?!!")) {
+            params.match = MatchType.FUZZY;
+            params.classDisplay = ClassDisplay.NONE;
+        } else if (query.contains("!!")) {
+            params.match = MatchType.STRICT;
+            params.classDisplay = ClassDisplay.MINIMAL;
         } else if (query.contains("?!")) {
             params.match = MatchType.FUZZY;
-            params.noChildren = true; // DisplayParam for Class Display
-            return "[?][!]";
+            params.classDisplay = ClassDisplay.MINIMAL;
         } else if (query.contains("!")) {
             params.match = MatchType.STRICT;
-            return "[!]";
         } else if (query.contains("?")) {
             params.match = MatchType.FUZZY;
-            return "[?]";
         }
-
-        return "";
     }
 
     @Override
@@ -107,7 +100,7 @@ public class SearchParameters {
                 "\n  Mappings = " + mappings +
                 "\n  Case Sensitive = " + (caseSensitive ? "Yes" : "No") +
                 "\n  Query = " + query +
-                (noChildren ? "\n  No Children" : "");
+                (classDisplay == ClassDisplay.MINIMAL || classDisplay == ClassDisplay.NONE ? "\n  No Children" : "");
     }
 
     public enum MatchType {
