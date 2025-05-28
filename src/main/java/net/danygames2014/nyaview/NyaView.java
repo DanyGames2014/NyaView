@@ -7,7 +7,7 @@ import net.danygames2014.nyaview.mapping.Mappings;
 import org.simpleyaml.configuration.serialization.ConfigurationSerialization;
 
 public class NyaView {
-    public static final Logger LOGGER = new Logger("NyaPing", Logger.LogLevel.INFO);
+    public static final Logger LOGGER = new Logger("NyaView", Logger.LogLevel.INFO);
     public static Config config;
     public static MappingLoader loader;
     
