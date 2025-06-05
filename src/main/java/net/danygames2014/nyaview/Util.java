@@ -6,6 +6,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Util {
+    public static String getProgramPath() {
+        return Paths.get(System.getProperty("user.dir")).toString();
+    }
+    
     public static Path getMappingPath(String filename) {
         return Paths.get(System.getProperty("user.dir") + "/mappings/" + filename);
     }

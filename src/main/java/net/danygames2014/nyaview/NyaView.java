@@ -1,5 +1,7 @@
 package net.danygames2014.nyaview;
 
+import net.danygames2014.nyaview.download.DownloadCatalog;
+import net.danygames2014.nyaview.download.Downloader;
 import net.danygames2014.nyaview.log.Logger;
 import net.danygames2014.nyaview.mapping.Intermediary;
 import net.danygames2014.nyaview.mapping.MappingLoader;
@@ -10,18 +12,20 @@ public class NyaView {
     public static final Logger LOGGER = new Logger("NyaView", Logger.LogLevel.INFO);
     public static Config config;
     public static MappingLoader loader;
-    
+    public static DownloadCatalog downloadCatalog;
+
     public static void init() {
         ConfigurationSerialization.registerClass(Intermediary.class);
         ConfigurationSerialization.registerClass(Mappings.class);
 
         config = new Config("config.yml");
+        downloadCatalog = new DownloadCatalog();
         loader = new MappingLoader();
 
         for (Intermediary intermediary : config.getIntermediaryList()) {
             loader.load(intermediary);
         }
-        
+
         for (Mappings mappingSet : config.getMappingList()) {
             loader.load(mappingSet);
         }

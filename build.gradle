@@ -21,11 +21,12 @@ repositories {
 
     mavenCentral()
 }
-
 dependencies {
+    implementation("org.json:json:20250517")
     implementation("me.carleslc:Simple-Yaml:1.8.4")
     implementation("net.fabricmc:mapping-io:${project.mappingio_version}")
 }
+
 
 jar {
     manifest {
