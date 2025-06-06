@@ -10,7 +10,14 @@ public class ArtifactTest {
 
         DownloadCatalog catalog = new DownloadCatalog();
 
-        Downloader.download(catalog.getDownloads("b1.7.3").get("babric"));
+        for (var v : catalog.catalogues.entrySet()) {
+            System.out.print("\n" + v.getKey() + " : " );
+            for (var e : v.getValue().entrySet()) {
+                System.out.print(e.getValue().getName() + " ");
+            }
+        }
+        
+        //Downloader.download(catalog.getDownloads("b1.7.3").get("babric"));
 //        var downloads = catalog.getDownloads(NyaView.config.getDownloadVersion());
 //        for (var dl : downloads.entrySet()) {
 //            Downloader.download(dl.getValue());

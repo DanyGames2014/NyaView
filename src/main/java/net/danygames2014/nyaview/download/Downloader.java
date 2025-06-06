@@ -30,12 +30,12 @@ public class Downloader {
 
         String tempPath = Util.getProgramPath() + "/temp/" + dl.getId() + ".jar";
 
-        if (!fetchFile(dl.downloadable.getUrl(), Path.of(tempPath))) {
+        if (!fetchFile(url, Path.of(tempPath))) {
             NyaView.LOGGER.error("Download Failed, error while fetching the file");
             return new ActionResult(31, "Download Failed, Error while fetching the file");
         }
 
-        if (!extractFile(tempPath, Util.getMappingPath(dl.getPath()).toString(), "mappings/mappings.tiny")) {
+        if (!extractFile(tempPath, Util.getMappingPath(dl.getPath()).toString(), dl.mappingFilePath)) {
             NyaView.LOGGER.error("Download Failed, error while extracting the file");
             return new ActionResult(32, "Download Failed, Error while extracting the file");
         }
