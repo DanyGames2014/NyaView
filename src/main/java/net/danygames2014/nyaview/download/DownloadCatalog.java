@@ -40,7 +40,7 @@ public class DownloadCatalog {
                     @Override
                     public URL getUrl() {
                         try {
-                            return new URL(getBaseArtifactUrl() + "/b1.7.3/calamus-intermediary-gen2-b1.7.3-v2.jar");
+                            return new URL(getBaseArtifactUrl() + "/" + NyaView.config.getDownloadVersion() + "/calamus-intermediary-gen2-" + NyaView.config.getDownloadVersion() + "-v2.jar");
                         } catch (MalformedURLException e) {
                             NyaView.LOGGER.error(e.getMessage(), e);
                             return null;

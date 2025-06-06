@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class Config {
     private final YamlFile yamlFile;
     private final HashMap<String, Mappings> mappings;
@@ -44,7 +44,7 @@ public class Config {
                     mappings.putIfAbsent(mappingSet.id, mappingSet);
                 }
             }
-            
+
             //noinspection unchecked
             ignoredPackages = (ArrayList<String>) yamlFile.getList("ignoredPackages", ignoredPackages);
 
@@ -66,24 +66,12 @@ public class Config {
         yamlFile.addDefault("ignoredPackages", ignoredPackages);
 
         // Intermediaries
-        if (!yamlFile.contains("intermediaries")) {
-            ArrayList<Intermediary> exampleIntermediaries = new ArrayList<>();
-
-//            exampleIntermediaries.add(new Intermediary("babric", "Babric", Environment.MERGED, "intermediary", "client", "server", "babric.tiny", MappingFormat.TINY_2_FILE));
-//            exampleIntermediaries.add(new Intermediary("calamus_1_client", "Calamus Gen 1 Client", Environment.CLIENT, "intermediary", "official", null, "calamus_gen1_client.tiny", MappingFormat.TINY_2_FILE));
-//            exampleIntermediaries.add(new Intermediary("calamus_2", "Calamus Gen 2", Environment.MERGED, "intermediary", "clientOfficial", "serverOfficial", "calamus_gen2.tiny", MappingFormat.TINY_2_FILE));
-
-            yamlFile.addDefault("intermediaries", exampleIntermediaries);
-        }
+        ArrayList<Intermediary> exampleIntermediaries = new ArrayList<>();
+        yamlFile.addDefault("intermediaries", exampleIntermediaries);
 
         // Mappings
-        if (!yamlFile.contains("mappings")) {
-            ArrayList<Mappings> exampleMappings = new ArrayList<>();
-
-//            exampleMappings.add(new Mappings("biny", "BINY", Environment.MERGED, MappingType.BABRIC, "biny", MappingFormat.ENIGMA_DIR, "babric"));
-
-            yamlFile.addDefault("mappings", exampleMappings);
-        }
+        ArrayList<Mappings> exampleMappings = new ArrayList<>();
+        yamlFile.addDefault("mappings", exampleMappings);
 
         save();
     }
@@ -108,22 +96,48 @@ public class Config {
         return new ArrayList<>(mappings.values());
     }
 
-    public boolean addMappings(String key, Mappings mapping) {
+    public ActionResult addMappings(String key, Mappings mapping) {
         if (!mappings.containsKey(key)) {
             mappings.put(key, mapping);
-            save(true);
-            return true;
+            if (!save(true)) {
+                return new ActionResult(10, "Error while saving config file");
+            }
+            return new ActionResult(0, "Mappings " + key + " added successfully");
         }
-        return false;
+        return new ActionResult(11, "Mappings " + key + " already exist");
     }
 
-    public boolean addIntermediaries(String key, Intermediary intermediary) {
+    public ActionResult addIntermediaries(String key, Intermediary intermediary) {
         if (!intermediaries.containsKey(key)) {
             intermediaries.put(key, intermediary);
-            save(true);
-            return true;
+            if (!save(true)) {
+                return new ActionResult(10, "Error while saving config file");
+            }
+            return new ActionResult(0, "Intermediaries " + key + " added successfully");
         }
-        return false;
+        return new ActionResult(12, "Intermediaries " + key + " already exist");
+    }
+
+    public ActionResult removeMappings(String key) {
+        if (mappings.containsKey(key)) {
+            mappings.remove(key);
+            if (!save(true)) {
+                return new ActionResult(10, "Error while saving config file");
+            }
+            return new ActionResult(0, "Mappings " + key + " removed successfully");
+        }
+        return new ActionResult(13, "Mappings " + key + " not found");
+    }
+
+    public ActionResult removeIntermediaries(String key) {
+        if (intermediaries.containsKey(key)) {
+            intermediaries.remove(key);
+            if (!save(true)) {
+                return new ActionResult(10, "Error while saving config file");
+            }
+            return new ActionResult(0, "Intermediaries " + key + " removed successfully");
+        }
+        return new ActionResult(14, "Intermediaries " + key + " not found");
     }
 
     public ArrayList<String> getIgnoredPackages() {
@@ -143,11 +157,10 @@ public class Config {
     public boolean save() {
         return save(false);
     }
-    
-    @SuppressWarnings("UnusedReturnValue")
-    public boolean save(boolean setMappingLists) {
+
+    public boolean save(boolean writeMappingLists) {
         try {
-            if(setMappingLists) {
+            if (writeMappingLists) {
                 yamlFile.set("intermediaries", getIntermediaryList());
                 yamlFile.set("mappings", getMappingList());
             }

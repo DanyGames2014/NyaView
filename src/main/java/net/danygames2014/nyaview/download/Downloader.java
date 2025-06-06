@@ -1,5 +1,6 @@
 package net.danygames2014.nyaview.download;
 
+import net.danygames2014.nyaview.ActionResult;
 import net.danygames2014.nyaview.NyaView;
 import net.danygames2014.nyaview.Util;
 import net.danygames2014.nyaview.mapping.Intermediary;
@@ -18,39 +19,40 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class Downloader {
-    public static void download(DownloadCatalog.DownloadEntry dl) {
+    public static ActionResult download(DownloadCatalog.DownloadEntry dl) {
         NyaView.LOGGER.info("Downloading " + dl.getName());
 
         URL url = dl.downloadable.getUrl();
         if (url == null) {
             NyaView.LOGGER.error("Download Failed, error while forming the URL");
-            return;
+            return new ActionResult(30, "Download Failed, Error while forming the URL");
         }
 
         String tempPath = Util.getProgramPath() + "/temp/" + dl.getId() + ".jar";
 
         if (!fetchFile(dl.downloadable.getUrl(), Path.of(tempPath))) {
             NyaView.LOGGER.error("Download Failed, error while fetching the file");
-            return;
+            return new ActionResult(31, "Download Failed, Error while fetching the file");
         }
 
         if (!extractFile(tempPath, Util.getMappingPath(dl.getPath()).toString(), "mappings/mappings.tiny")) {
             NyaView.LOGGER.error("Download Failed, error while extracting the file");
-            return;
+            return new ActionResult(32, "Download Failed, Error while extracting the file");
         }
 
         if (!installMappings(dl)) {
             NyaView.LOGGER.error("Download Failed, error while installing mappings");
-            return;
+            return new ActionResult(33, "Download Failed, Error while installing mappings");
         }
-
+        
+        return new  ActionResult(0, "Download Successful");
     }
 
     public static boolean installMappings(DownloadCatalog.DownloadEntry dl) {
         if (dl.mappings != null) {
             Mappings mappings = dl.mappings;
             NyaView.LOGGER.info("Installing mappings " + mappings.name);
-            if (!NyaView.config.addMappings(mappings.id, mappings)) {
+            if (!NyaView.config.addMappings(mappings.id, mappings).successful()) {
                 NyaView.LOGGER.warn("Mappings " + mappings.name + " already exist");
             }
             return true;
@@ -59,7 +61,7 @@ public class Downloader {
         if (dl.intermediary != null) {
             Intermediary intermediary = dl.intermediary;
             NyaView.LOGGER.info("Installing intermediary " + intermediary.name);
-            if (!NyaView.config.addIntermediaries(intermediary.id, intermediary)) {
+            if (!NyaView.config.addIntermediaries(intermediary.id, intermediary).successful()) {
                 NyaView.LOGGER.warn("Intermediaries " + intermediary.id + " already exist");
             }
             return true;
