@@ -17,7 +17,7 @@ public class ArtifactTest {
             }
         }
         
-        //Downloader.download(catalog.getDownloads("b1.7.3").get("babric"));
+        Downloader.download(catalog.getCatalog("b1.7.3").get("nostalgia"));
 //        var downloads = catalog.getDownloads(NyaView.config.getDownloadVersion());
 //        for (var dl : downloads.entrySet()) {
 //            Downloader.download(dl.getValue());

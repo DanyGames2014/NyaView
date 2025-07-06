@@ -55,7 +55,7 @@ public class DownloadCatalog {
                     )
             );
 
-            // Calamus Gen 2
+            // Feather Gen 2
             addToCatalog("feather_gen2",
                     new DownloadEntry(
                             new MavenDownloadable("https://maven.ornithemc.net", "releases", "net.ornithemc", "feather-gen2") {
@@ -105,6 +105,20 @@ public class DownloadCatalog {
                         },
                         new Mappings("biny", "BINY", Environment.MERGED, MappingType.BABRIC, "biny.tiny", MappingFormat.TINY_2_FILE, "babric"),
                         "b1.7.3"
+                )
+        );
+        
+        addToCatalog("nostalgia", new DownloadEntry(
+                        new MavenDownloadable("https://maven.wispforest.io", "releases", "me.alphamode", "nostalgia") {
+                            @Override
+                            public String getUrlString() {
+                                String version = MavenUtil.fetchLatestVersion(baseUrl, repository, groupId, artifactId);
+                                return getBaseArtifactUrl() + "/" + version + "/nostalgia-" + version + "-v2.jar";
+                            }
+                        },
+                        new Mappings("nostalgia", "Nostalgia", Environment.MERGED, MappingType.BABRIC, "nostalgia.tiny", MappingFormat.TINY_2_FILE, "babric"),
+                        "b1.7.3"
+
                 )
         );
 
