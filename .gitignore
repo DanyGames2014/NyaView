@@ -9,6 +9,7 @@ build/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.idea/.name
 *.iws
 *.iml
 *.ipr
@@ -18,8 +19,11 @@ out/
 
 ### Mac OS ###
 .DS_Store
+
+### NyaView Files ###
 mappings
 mappingsx
 config.yml
 config.ymlx
 temp
+profiles
