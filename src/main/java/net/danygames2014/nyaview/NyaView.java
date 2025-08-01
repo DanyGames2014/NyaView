@@ -23,7 +23,10 @@ public class NyaView {
         profileManager = new ProfileManager();
         profileManager.init();
         downloadCatalog = new DownloadCatalog();
-        loadMappings();
+        
+        if (loader == null) {
+            loadMappings();
+        }
     }
     
     public static void loadMappings() {

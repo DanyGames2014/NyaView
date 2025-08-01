@@ -21,15 +21,19 @@ public class ProfileManager {
                 NyaView.LOGGER.info("Created profiles directory");
             }
             
-            for (File file : profileDir.listFiles()) {
-                if (file.isFile()) {
-                    String path = file.getPath();
-                    NyaView.LOGGER.info("Loading profile " + path);
-                    Profile profile = new Profile(path);
+            for (File item : profileDir.listFiles()) {
+                if (item.isDirectory()) {
+                    File profileFile = new File(item.getPath() + "/" + item.getName() + ".yml");
+                    
+                    if (!profileFile.exists()) {
+                        break;
+                    }
+                    
+                    NyaView.LOGGER.info("Loading profile " + profileFile.getName());
+                    Profile profile = new Profile(profileFile.getPath());
                     profiles.put(profile.getId(), profile);
-                }
+                }    
             }
-            
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +48,7 @@ public class ProfileManager {
             if (profiles.isEmpty()) {
                 // If there are no profiles, create a default one
                 NyaView.LOGGER.info("No profiles found, creating default profile...");
-                profiles.put("default", new Profile("profiles/default.yml"));
+                profiles.put("default", new Profile(Profile.constructProfilePath("default")));
                 switchProfile("default");
             } else {
                 // If there are profiles, but not the active one, use the first loaded one
@@ -66,6 +70,7 @@ public class ProfileManager {
         
         profiles.put(profile.getId(), profile);
         NyaView.LOGGER.info("Added profile " + profile.getId());
+        profile.save();
         return true;
     }
     

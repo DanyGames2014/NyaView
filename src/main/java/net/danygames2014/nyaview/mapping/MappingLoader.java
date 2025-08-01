@@ -449,7 +449,7 @@ public class MappingLoader {
             if (intermediary != null) {
                 LOGGER.info("Intermediary " + intermediary.name + " discovered for " + mappingSet.name);
             } else {
-                LOGGER.error("Intermediary " + mappingSet.name + " not found for " + mappingSet.name);
+                LOGGER.error("Intermediary " + mappingSet.intermediaryId + " not found for " + mappingSet.name);
                 return;
             }
 

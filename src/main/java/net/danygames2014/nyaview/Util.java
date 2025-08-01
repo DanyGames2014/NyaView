@@ -11,7 +11,7 @@ public class Util {
     }
     
     public static Path getMappingPath(String filename) {
-        return Paths.get(System.getProperty("user.dir") + "/mappings/" + filename);
+        return Paths.get(System.getProperty("user.dir") + "/profiles/" + NyaView.profileManager.activeProfile.getId() + "/mappings/" + filename);
     }
 
     public static String inputOrEmpty(String input) {

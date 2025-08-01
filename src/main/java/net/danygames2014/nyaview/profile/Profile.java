@@ -22,13 +22,13 @@ public class Profile {
         this.yamlFile.set("name", name);
         this.yamlFile.set("version", version);
     }
-    
+
     public Profile(String path) {
         yamlFile = new YamlFile(path);
         mappings = new HashMap<>();
         intermediaries = new HashMap<>();
         ignoredPackages = new ArrayList<>();
-        
+
         try {
             if (!yamlFile.exists()) {
                 yamlFile.createNewFile();
@@ -52,23 +52,23 @@ public class Profile {
                     mappings.putIfAbsent(mappingSet.id, mappingSet);
                 }
             }
-            
+
             //noinspection unchecked
             ignoredPackages = (ArrayList<String>) yamlFile.getList("ignoredPackages", ignoredPackages);
         } catch (Exception e) {
             NyaView.LOGGER.error("Failed to load profile file: " + path, e);
         }
     }
-    
+
     public void init() {
         yamlFile.setHeader("--- NyaView Profile Configuration File ---");
-        
+
         // ID
         yamlFile.addDefault("id", "default");
-        
+
         // Name
         yamlFile.addDefault("name", "Default Profile");
-        
+
         // Version
         yamlFile.addDefault("version", "b1.7.3");
 
@@ -92,12 +92,12 @@ public class Profile {
     public String getId() {
         return yamlFile.getString("id");
     }
-    
+
     // Name
     public String getName() {
         return yamlFile.getString("name");
     }
-    
+
     // Version
     public String getVersion() {
         return yamlFile.getString("version");
@@ -138,7 +138,7 @@ public class Profile {
     public Mappings getMappings(String id) {
         return mappings.getOrDefault(id, null);
     }
-    
+
     public ArrayList<Mappings> getMappingList() {
         return new ArrayList<>(mappings.values());
     }
@@ -169,7 +169,7 @@ public class Profile {
     public ArrayList<String> getIgnoredPackages() {
         return ignoredPackages;
     }
-    
+
     public boolean save() {
         return save(false);
     }
@@ -191,5 +191,9 @@ public class Profile {
     @Override
     public String toString() {
         return this.getName() + " (" + this.getVersion() + ")";
+    }
+
+    public static String constructProfilePath(String id) {
+        return "profiles/" + id + "/" + id + ".yml";
     }
 }

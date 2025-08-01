@@ -71,12 +71,12 @@ public class Downloader {
         return false;
     }
 
-    public static boolean extractFile(String archivePath, String outputPath, String fileName) {
+    public static boolean extractFile(String archivePath, String outputPath, String fileToExtract) {
         NyaView.LOGGER.info("Extracting mappings from " + archivePath + " to " + outputPath);
         try (ZipInputStream zis = new ZipInputStream(new FileInputStream(archivePath))) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
-                if (entry.getName().equals(fileName)) {
+                if (entry.getName().equals(fileToExtract)) {
                     Files.createDirectories(Path.of(outputPath).getParent());
 
                     try (FileOutputStream fos = new FileOutputStream(outputPath)) {
@@ -87,7 +87,7 @@ public class Downloader {
                         }
                     }
                     zis.closeEntry();
-                    NyaView.LOGGER.info("Extracted " + fileName + " to " + outputPath);
+                    NyaView.LOGGER.info("Extracted " + fileToExtract + " to " + outputPath);
                     return true;
                 }
             }
