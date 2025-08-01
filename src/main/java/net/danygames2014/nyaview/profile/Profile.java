@@ -187,4 +187,9 @@ public class Profile {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return this.getName() + " (" + this.getVersion() + ")";
+    }
 }

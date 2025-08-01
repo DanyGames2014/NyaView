@@ -69,6 +69,7 @@ public class DescriptorParser {
                     nextIsArray = false;
                     break;
 
+                // short
                 case 'S':
                     addToDescriptor(descriptor, descriptorEnd, "short", nextIsArray);
                     nextIsArray = false;

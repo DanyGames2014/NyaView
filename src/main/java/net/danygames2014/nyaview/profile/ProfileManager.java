@@ -57,15 +57,29 @@ public class ProfileManager {
     public HashMap<String, Profile> getProfiles() {
         return profiles;
     }
-
+    
+    public boolean addProfile(Profile profile) {
+        if (profiles.containsKey(profile.getId())) {
+            NyaView.LOGGER.warn("Tried to add profile " + profile.getId() + " but it already exists");
+            return false;
+        }
+        
+        profiles.put(profile.getId(), profile);
+        NyaView.LOGGER.info("Added profile " + profile.getId());
+        return true;
+    }
+    
     public void switchProfile(String id) {
         if (!profiles.containsKey(id)) {
             NyaView.LOGGER.warn("Tried to load non-existent profile " + id);
             activeProfile = profiles.values().iterator().next();
-            return;
+        } else {
+            activeProfile = profiles.get(id);
         }
         
-        activeProfile = profiles.get(id);
         NyaView.LOGGER.info("Set active profile to " + activeProfile.getName());
+        NyaView.config.setActiveProfileId(activeProfile.getId());
+        
+        NyaView.loadMappings();
     }
 }

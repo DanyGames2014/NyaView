@@ -44,6 +44,11 @@ public class Config {
         return yamlFile.getString("activeProfile");
     }
     
+    public void setActiveProfileId(String id) {
+        yamlFile.set("activeProfile", id);
+        save();
+    }
+    
     @Deprecated(forRemoval = true)
     public String getDownloadVersion() {
         return NyaView.profileManager.activeProfile.getVersion();
