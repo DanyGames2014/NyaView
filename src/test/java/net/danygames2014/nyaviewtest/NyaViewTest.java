@@ -14,22 +14,22 @@ public class NyaViewTest {
     public static void main(String[] args) {
         NyaView.init();
 
-        Scanner sc = new Scanner(System.in);
-        while (run) {
-            String input = sc.nextLine();
-
-            SearchParameters parameters = SearchParameters.parse(input);
-            DisplayParameters displayParameters = new DisplayParameters();
-
-            if (parameters == null) {
-                System.err.println("Invalid search query");
-                continue;
-            }
-
-            displayParameters.classDisplay = parameters.classDisplay;
-
-            SearchResult result = Search.search(parameters);
-            Search.printResult(result, parameters, displayParameters);
-        }
+//        Scanner sc = new Scanner(System.in);
+//        while (run) {
+//            String input = sc.nextLine();
+//
+//            SearchParameters parameters = SearchParameters.parse(input);
+//            DisplayParameters displayParameters = new DisplayParameters();
+//
+//            if (parameters == null) {
+//                System.err.println("Invalid search query");
+//                continue;
+//            }
+//
+//            displayParameters.classDisplay = parameters.classDisplay;
+//
+//            SearchResult result = Search.search(parameters);
+//            Search.printResult(result, parameters, displayParameters);
+//        }
     }
 }

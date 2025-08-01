@@ -60,6 +60,9 @@ public class Config {
         yamlFile.addDefault("downloadVersion", "b1.7.3");
         yamlFile.setComment("downloadVersion", "Not Yet Implemented");
 
+        // Profile
+        yamlFile.addDefault("activeProfile", "default");
+        
         // Ignored Packages
         ArrayList<String> ignoredPackages = new ArrayList<>();
 //        ignoredPackages.add("argo");
@@ -76,6 +79,10 @@ public class Config {
         save();
     }
 
+    public String getActiveProfileId() {
+        return yamlFile.getString("activeProfile");
+    }
+    
     public String getDownloadVersion() {
         return yamlFile.getString("downloadVersion");
     }
