@@ -77,7 +77,7 @@ public class MappingLoader {
 
                 // Check if package is ignored
                 boolean ignored = false;
-                for (String ignoredPackage : NyaView.config.getIgnoredPackages()) {
+                for (String ignoredPackage : NyaView.profileManager.activeProfile.getIgnoredPackages()) {
                     if (classPath.pkg.contains(ignoredPackage)) {
                         LOGGER.warn("Ignored class " + classPath.getFullPath() + " due to being in package " + ignoredPackage);
                         ignored = true;
@@ -445,7 +445,7 @@ public class MappingLoader {
         try {
             MappingReader.read(Util.getMappingPath(mappingSet.path), mappingSet.format, babric);
 
-            Intermediary intermediary = NyaView.config.getIntermediary(mappingSet.intermediaryId);
+            Intermediary intermediary = NyaView.profileManager.activeProfile.getIntermediary(mappingSet.intermediaryId);
             if (intermediary != null) {
                 LOGGER.info("Intermediary " + intermediary.name + " discovered for " + mappingSet.name);
             } else {

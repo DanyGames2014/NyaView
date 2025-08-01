@@ -11,15 +11,9 @@ import java.util.HashMap;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class Config {
     private final YamlFile yamlFile;
-    private final HashMap<String, Mappings> mappings;
-    private final HashMap<String, Intermediary> intermediaries;
-    private ArrayList<String> ignoredPackages;
 
     public Config(String filename) {
         yamlFile = new YamlFile(filename);
-        mappings = new HashMap<>();
-        intermediaries = new HashMap<>();
-        ignoredPackages = new ArrayList<>();
 
         try {
             if (!yamlFile.exists()) {
@@ -32,22 +26,6 @@ public class Config {
             yamlFile.loadWithComments();
             init();
             yamlFile.loadWithComments();
-
-            for (Object o : yamlFile.getList("intermediaries")) {
-                if (o instanceof Intermediary intermediary) {
-                    intermediaries.putIfAbsent(intermediary.id, intermediary);
-                }
-            }
-
-            for (Object o : yamlFile.getList("mappings")) {
-                if (o instanceof Mappings mappingSet) {
-                    mappings.putIfAbsent(mappingSet.id, mappingSet);
-                }
-            }
-
-            //noinspection unchecked
-            ignoredPackages = (ArrayList<String>) yamlFile.getList("ignoredPackages", ignoredPackages);
-
         } catch (Exception e) {
             NyaView.LOGGER.error("Failed to load config file: " + filename, e);
         }
@@ -56,25 +34,8 @@ public class Config {
     public void init() {
         yamlFile.setHeader("--- NyaView Mappings Configuration File ---");
 
-        // Download Version
-        yamlFile.addDefault("downloadVersion", "b1.7.3");
-        yamlFile.setComment("downloadVersion", "Not Yet Implemented");
-
         // Profile
         yamlFile.addDefault("activeProfile", "default");
-        
-        // Ignored Packages
-        ArrayList<String> ignoredPackages = new ArrayList<>();
-//        ignoredPackages.add("argo");
-        yamlFile.addDefault("ignoredPackages", ignoredPackages);
-
-        // Intermediaries
-        ArrayList<Intermediary> exampleIntermediaries = new ArrayList<>();
-        yamlFile.addDefault("intermediaries", exampleIntermediaries);
-
-        // Mappings
-        ArrayList<Mappings> exampleMappings = new ArrayList<>();
-        yamlFile.addDefault("mappings", exampleMappings);
 
         save();
     }
@@ -83,72 +44,54 @@ public class Config {
         return yamlFile.getString("activeProfile");
     }
     
+    @Deprecated(forRemoval = true)
     public String getDownloadVersion() {
-        return yamlFile.getString("downloadVersion");
+        return NyaView.profileManager.activeProfile.getVersion();
     }
 
+    @Deprecated(forRemoval = true)
     public Intermediary getIntermediary(String id) {
-        return intermediaries.getOrDefault(id, null);
+        return NyaView.profileManager.activeProfile.getIntermediary(id);
     }
 
+    @Deprecated(forRemoval = true)
     public Mappings getMappings(String id) {
-        return mappings.getOrDefault(id, null);
+        return NyaView.profileManager.activeProfile.getMappings(id);
     }
 
+    @Deprecated(forRemoval = true)
     public ArrayList<Intermediary> getIntermediaryList() {
-        return new ArrayList<>(intermediaries.values());
+        return NyaView.profileManager.activeProfile.getIntermediaryList();
     }
 
+    @Deprecated(forRemoval = true)
     public ArrayList<Mappings> getMappingList() {
-        return new ArrayList<>(mappings.values());
+        return NyaView.profileManager.activeProfile.getMappingList();
     }
 
+    @Deprecated(forRemoval = true)
     public ActionResult addMappings(String key, Mappings mapping) {
-        if (!mappings.containsKey(key)) {
-            mappings.put(key, mapping);
-            if (!save(true)) {
-                return new ActionResult(10, "Error while saving config file");
-            }
-            return new ActionResult(0, "Mappings " + key + " added successfully");
-        }
-        return new ActionResult(11, "Mappings " + key + " already exist");
+        return NyaView.profileManager.activeProfile.addMappings(key, mapping);
     }
 
+    @Deprecated(forRemoval = true)
     public ActionResult addIntermediaries(String key, Intermediary intermediary) {
-        if (!intermediaries.containsKey(key)) {
-            intermediaries.put(key, intermediary);
-            if (!save(true)) {
-                return new ActionResult(10, "Error while saving config file");
-            }
-            return new ActionResult(0, "Intermediaries " + key + " added successfully");
-        }
-        return new ActionResult(12, "Intermediaries " + key + " already exist");
+        return NyaView.profileManager.activeProfile.addIntermediaries(key, intermediary);
     }
 
+    @Deprecated(forRemoval = true)
     public ActionResult removeMappings(String key) {
-        if (mappings.containsKey(key)) {
-            mappings.remove(key);
-            if (!save(true)) {
-                return new ActionResult(10, "Error while saving config file");
-            }
-            return new ActionResult(0, "Mappings " + key + " removed successfully");
-        }
-        return new ActionResult(13, "Mappings " + key + " not found");
+        return NyaView.profileManager.activeProfile.removeMappings(key);
     }
 
+    @Deprecated(forRemoval = true)
     public ActionResult removeIntermediaries(String key) {
-        if (intermediaries.containsKey(key)) {
-            intermediaries.remove(key);
-            if (!save(true)) {
-                return new ActionResult(10, "Error while saving config file");
-            }
-            return new ActionResult(0, "Intermediaries " + key + " removed successfully");
-        }
-        return new ActionResult(14, "Intermediaries " + key + " not found");
+        return NyaView.profileManager.activeProfile.removeIntermediaries(key);
     }
 
+    @Deprecated(forRemoval = true)
     public ArrayList<String> getIgnoredPackages() {
-        return ignoredPackages;
+        return NyaView.profileManager.activeProfile.getIgnoredPackages();
     }
 
     public YamlFile getYamlFile() {

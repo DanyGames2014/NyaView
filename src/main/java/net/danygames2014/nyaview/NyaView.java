@@ -25,11 +25,11 @@ public class NyaView {
         downloadCatalog = new DownloadCatalog();
         loader = new MappingLoader();
 
-        for (Intermediary intermediary : config.getIntermediaryList()) {
+        for (Intermediary intermediary : profileManager.activeProfile.getIntermediaryList()) {
             loader.load(intermediary);
         }
 
-        for (Mappings mappingSet : config.getMappingList()) {
+        for (Mappings mappingSet : profileManager.activeProfile.getMappingList()) {
             loader.load(mappingSet);
         }
     }

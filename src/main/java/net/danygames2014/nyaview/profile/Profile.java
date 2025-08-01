@@ -1,5 +1,6 @@
 package net.danygames2014.nyaview.profile;
 
+import net.danygames2014.nyaview.ActionResult;
 import net.danygames2014.nyaview.NyaView;
 import net.danygames2014.nyaview.mapping.Intermediary;
 import net.danygames2014.nyaview.mapping.Mappings;
@@ -102,14 +103,73 @@ public class Profile {
         return yamlFile.getString("version");
     }
 
+    // Intermediary
+    public Intermediary getIntermediary(String id) {
+        return intermediaries.getOrDefault(id, null);
+    }
+
     public ArrayList<Intermediary> getIntermediaryList() {
         return new ArrayList<>(intermediaries.values());
     }
 
+    public ActionResult addIntermediaries(String key, Intermediary intermediary) {
+        if (!intermediaries.containsKey(key)) {
+            intermediaries.put(key, intermediary);
+            if (!save(true)) {
+                return new ActionResult(10, "Error while saving config file");
+            }
+            return new ActionResult(0, "Intermediaries " + key + " added successfully");
+        }
+        return new ActionResult(12, "Intermediaries " + key + " already exist");
+    }
+
+    public ActionResult removeIntermediaries(String key) {
+        if (intermediaries.containsKey(key)) {
+            intermediaries.remove(key);
+            if (!save(true)) {
+                return new ActionResult(10, "Error while saving config file");
+            }
+            return new ActionResult(0, "Intermediaries " + key + " removed successfully");
+        }
+        return new ActionResult(14, "Intermediaries " + key + " not found");
+    }
+
+    // Mappings
+    public Mappings getMappings(String id) {
+        return mappings.getOrDefault(id, null);
+    }
+    
     public ArrayList<Mappings> getMappingList() {
         return new ArrayList<>(mappings.values());
     }
 
+    public ActionResult addMappings(String key, Mappings mapping) {
+        if (!mappings.containsKey(key)) {
+            mappings.put(key, mapping);
+            if (!save(true)) {
+                return new ActionResult(10, "Error while saving config file");
+            }
+            return new ActionResult(0, "Mappings " + key + " added successfully");
+        }
+        return new ActionResult(11, "Mappings " + key + " already exist");
+    }
+
+    public ActionResult removeMappings(String key) {
+        if (mappings.containsKey(key)) {
+            mappings.remove(key);
+            if (!save(true)) {
+                return new ActionResult(10, "Error while saving config file");
+            }
+            return new ActionResult(0, "Mappings " + key + " removed successfully");
+        }
+        return new ActionResult(13, "Mappings " + key + " not found");
+    }
+
+    // Ignored Packages
+    public ArrayList<String> getIgnoredPackages() {
+        return ignoredPackages;
+    }
+    
     public boolean save() {
         return save(false);
     }

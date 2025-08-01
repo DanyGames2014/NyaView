@@ -47,7 +47,7 @@ public class DownloadCatalog {
                             new MavenDownloadable("https://maven.ornithemc.net", "releases", "net.ornithemc", "calamus-intermediary-gen2") {
                                 @Override
                                 public String getUrlString() {
-                                    return getBaseArtifactUrl() + "/" + NyaView.config.getDownloadVersion() + "/calamus-intermediary-gen2-" + NyaView.config.getDownloadVersion() + "-v2.jar";
+                                    return getBaseArtifactUrl() + "/" + NyaView.profileManager.activeProfile.getVersion() + "/calamus-intermediary-gen2-" + NyaView.profileManager.activeProfile.getVersion() + "-v2.jar";
                                 }
                             },
                             new Intermediary("calamus_gen2", "Calamus Gen 2", Environment.MERGED, "intermediary", "clientOfficial", "serverOfficial", "calamus_gen2.tiny", MappingFormat.TINY_2_FILE),
@@ -71,7 +71,7 @@ public class DownloadCatalog {
                                         return null;
                                     }
 
-                                    String version = NyaView.config.getDownloadVersion() + "+" + split[1];
+                                    String version = NyaView.profileManager.activeProfile.getVersion() + "+" + split[1];
                                     return getBaseArtifactUrl() + "/" + version + "/feather-gen2-" + version + "-v2.jar";
                                 }
                             },

@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.HashMap;
 
 public class ProfileManager {
-    public HashMap<String, Profile> profiles;
+    private HashMap<String, Profile> profiles;
     public Profile activeProfile;
     
     public void init() {
@@ -39,22 +39,26 @@ public class ProfileManager {
         
         if (profiles.containsKey(activeProfileName)) {
             // If such profile exists, load it
-            setActiveProfile(activeProfileName);
+            switchProfile(activeProfileName);
         } else {
             if (profiles.isEmpty()) {
                 // If there are no profiles, create a default one
                 NyaView.LOGGER.info("No profiles found, creating default profile...");
                 profiles.put("default", new Profile("profiles/default.yml"));
-                setActiveProfile("default");
+                switchProfile("default");
             } else {
                 // If there are profiles, but not the active one, use the first loaded one
                 NyaView.LOGGER.info("The active profile " + activeProfileName + " was not found, using first profile...");
-                setActiveProfile(profiles.values().iterator().next().getId());
+                switchProfile(profiles.values().iterator().next().getId());
             }
         }
     }
-    
-    public void setActiveProfile(String id) {
+
+    public HashMap<String, Profile> getProfiles() {
+        return profiles;
+    }
+
+    public void switchProfile(String id) {
         if (!profiles.containsKey(id)) {
             NyaView.LOGGER.warn("Tried to load non-existent profile " + id);
             activeProfile = profiles.values().iterator().next();

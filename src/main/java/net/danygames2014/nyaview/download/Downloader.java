@@ -52,7 +52,7 @@ public class Downloader {
         if (dl.mappings != null) {
             Mappings mappings = dl.mappings;
             NyaView.LOGGER.info("Installing mappings " + mappings.name);
-            if (!NyaView.config.addMappings(mappings.id, mappings).successful()) {
+            if (!NyaView.profileManager.activeProfile.addMappings(mappings.id, mappings).successful()) {
                 NyaView.LOGGER.warn("Mappings " + mappings.name + " already exist");
             }
             return true;
@@ -61,7 +61,7 @@ public class Downloader {
         if (dl.intermediary != null) {
             Intermediary intermediary = dl.intermediary;
             NyaView.LOGGER.info("Installing intermediary " + intermediary.name);
-            if (!NyaView.config.addIntermediaries(intermediary.id, intermediary).successful()) {
+            if (!NyaView.profileManager.activeProfile.addIntermediaries(intermediary.id, intermediary).successful()) {
                 NyaView.LOGGER.warn("Intermediaries " + intermediary.id + " already exist");
             }
             return true;
